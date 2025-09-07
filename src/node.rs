@@ -5,6 +5,8 @@ use crate::raft::types::LogEntry;
 use anyhow::Result;
 use tracing::{info, warn};
 
+
+#[derive(Eq, PartialEq, Debug)]
 pub enum Role {
     Follower,
     Candidate,
