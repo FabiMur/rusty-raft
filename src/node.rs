@@ -1,5 +1,6 @@
 use core::str;
 use std::os::unix::net::SocketAddr;
+use crate::raft::types::LogEntry;
 
 use anyhow::Result;
 use tracing::{info, warn};
@@ -27,7 +28,7 @@ pub struct Node {
     // --- Log and State Machine Management ---
 
     /// Log entries for the node
-    //pub log: Vec<LogEntry>,
+    pub log: Vec<LogEntry>,
     /// Index of the last applied log entry
     pub last_applied: u64,
     /// Index of the highest log entry known to be committed
