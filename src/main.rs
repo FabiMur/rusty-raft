@@ -1,5 +1,6 @@
 use clap::Parser;
 mod node;
+mod raft;
 #[derive(Parser, Debug)]
 #[clap(name = "rusty-raft", version, about = "Raft node in Rust")]
 struct Args {

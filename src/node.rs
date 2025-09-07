@@ -1,6 +1,6 @@
 use core::str;
 use std::os::unix::net::SocketAddr;
-use crate::raft::types::LogEntry;
+use crate::raft::LogEntry;
 
 use anyhow::Result;
 use tracing::{info, warn};
