@@ -37,3 +37,41 @@ pub struct LogEntry {
     /// Data contained in the entry
     pub command: Command,
 }
+
+enum RpcMessage{
+    RequestVote(RequestVote),
+    RequestVoteResponse(RequestVoteResponse),
+    AppendEntries(AppendEntries),
+    AppendEntriesResponse(AppendEntriesResponse),
+}
+
+// RequestVote RPC for leader election, only called by candidates
+struct RequestVote {
+    term: u64,
+    candidate_id: String,
+    last_log_index: u64,
+    last_log_term: u64,
+}
+
+// Response to RequestVote RPC
+struct RequestVoteResponse {
+    term: u64,
+    vote_granted: bool,
+}
+
+// AppendEntries RPC for log replication and heartbeats, only called by leaders
+struct AppendEntries {
+    term: u64,
+    leader_id: String,
+    prev_log_index: u64,
+    prev_log_term: u64,
+    entries: Vec<LogEntry>,
+    leader_commit: u64,
+}
+
+// Response to AppendEntries RPC
+struct AppendEntriesResponse {
+    term: u64,
+    success: bool,
+    match_index: u64,
+}
