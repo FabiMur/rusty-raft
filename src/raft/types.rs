@@ -1,4 +1,6 @@
 
+// Supported commands in the log entries 
+// Get and MGet are not supported as they do not modify state so they don't need to be replicated
 pub enum Command {
     // SET key value
     Set   { key: String, value: Vec<u8> },
@@ -28,7 +30,7 @@ pub enum Command {
     Rename { key: String, new_key: String },
 }
 
-
+/// A log entry in the Raft log
 pub struct LogEntry {
     /// Term in which the entry was received
     pub term: u64,
