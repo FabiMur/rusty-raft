@@ -1,4 +1,11 @@
 
+#[derive(Eq, PartialEq, Debug)]
+pub enum Role {
+    Follower,
+    Candidate,
+    Leader,
+}
+
 // Supported commands in the log entries 
 // Get and MGet are not supported as they do not modify state so they don't need to be replicated
 pub enum Command {
