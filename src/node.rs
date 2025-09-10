@@ -3,6 +3,8 @@ use crate::raft::*;
 
 use anyhow::Result;
 use tracing::{info, warn};
+use rand::Rng;
+use tokio::time::{sleep, Duration};
 
 
 
@@ -36,10 +38,40 @@ impl Node {
         }
     }
 
-    /// Starts the node's main event loop (placeholder)
+    /// Starts the node's main event loop (stub)
     pub async fn start(&mut self) -> Result<()> {
         info!("Node {} starting on gRPC port {} and HTTP port {}", self.id, self.grpc_port, self.http_port);
         // Placeholder for starting gRPC server and HTTP server
         Ok(())
+    }
+
+    /// Returns a random election timeout duration
+    fn random_election_timeout() -> Duration {
+        let ms = rand::thread_rng().gen_range(150..=300);
+        Duration::from_millis(ms)
+    }
+
+    /// Starts a new election for the node (stub)
+    async fn start_election(&mut self) -> Result<()> {
+        self.raft_state.become_candidate();
+        self.raft_state.voted_for = Some(self.id);
+        info!("Node {} started election for term {}", self.id, self.raft_state.current_term);
+
+        // TODO: send RequestVote to peers
+        // self.transport.broadcast_request_vote(...).await?;
+
+        Ok(())
+    }
+
+    /// Runs the election timer for the node
+    async fn run_election_timer(&mut self) {
+        loop {
+            let t = Self::random_election_timeout();
+            sleep(t).await;
+            if self.raft_state.role != Role::Leader {
+                warn!("Node {} election timeout, starting election", self.id);
+                self.start_election().await;
+            }
+        }
     }
 }
