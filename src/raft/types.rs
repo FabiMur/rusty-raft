@@ -47,14 +47,14 @@ pub struct LogEntry {
 
 /// Enum representing different types of RPC messages
 enum RpcMessage {
-    RequestVote(RequestVote),
+    RequestVote(RequestVoteRequest),
     RequestVoteResponse(RequestVoteResponse),
-    AppendEntries(AppendEntries),
+    AppendEntries(AppendEntriesRequest),
     AppendEntriesResponse(AppendEntriesResponse),
 }
 
 // RequestVote RPC for leader election, only called by candidates
-struct RequestVote {
+struct RequestVoteRequest {
     term: u64,
     candidate_id: String,
     last_log_index: u64,
@@ -68,7 +68,7 @@ struct RequestVoteResponse {
 }
 
 /// AppendEntries RPC for log replication and heartbeats, only called by leaders
-struct AppendEntries {
+struct AppendEntriesRequest {
     term: u64,
     leader_id: String,
     prev_log_index: u64,
