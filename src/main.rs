@@ -1,6 +1,8 @@
 use clap::Parser;
 mod node;
 mod raft;
+mod transport;
+
 #[derive(Parser, Debug)]
 #[clap(name = "rusty-raft", version, about = "Raft node in Rust")]
 struct Args {

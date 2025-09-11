@@ -1,14 +1,12 @@
-use std::net::SocketAddr;
 use crate::raft::*;
+use crate::transport::*;
 
 use anyhow::Result;
 use tracing::{info, warn};
 use rand::Rng;
 use tokio::time::{sleep, Duration};
 
-
-
-
+/// Represents a Raft node in the cluster
 pub struct Node {
     
     /// Unique identifier for the node
@@ -18,7 +16,7 @@ pub struct Node {
     pub raft_state: RaftState,
 
     /// List of peers in the cluster
-    pub peers: Vec<(SocketAddr, u64)>,
+    pub peers: Vec<Peer>,
     /// gRPC port for the node
     pub grpc_port: u16,
     /// HTTP port for the node
@@ -27,7 +25,7 @@ pub struct Node {
 
 impl Node {
     /// Creates a new Node with the given id, ports, and peers
-    pub fn new(id: u64, grpc_port: u16, http_port: u16, peers: Vec<(SocketAddr, u64)>) -> Self {
+    pub fn new(id: u64, grpc_port: u16, http_port: u16, peers: Vec<Peer>) -> Self {
         let num_nodes = peers.len() + 1; // Including self
         Node {
             id,
