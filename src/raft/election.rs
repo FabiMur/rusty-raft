@@ -52,5 +52,5 @@ impl RaftState {
         info!("Node {} rejected vote for candidate {} in term {}", self.id, candidate_id, term);
         false
     }
-    
+
 }
