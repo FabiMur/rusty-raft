@@ -1,8 +1,4 @@
-
-pub fn send_append_entries(&self, peer: &Peer, req: &AppendEntriesRequest) -> Result<AppendEntriesResponse> {
-    // Serializa y envía el mensaje
-}
-
-pub fn send_request_vote(&self, peer: &Peer, req: &RequestVoteRequest) -> Result<RequestVoteResponse> {
-    // Serializa y envía el mensaje
-}
+use crate::transport::Peer;
+// Update the path below if your generated proto code is in a different module or folder
+use crate::raft_proto::{raft_client::RaftClient, AppendEntriesRequest, AppendEntriesResponse};
+use anyhow::Result;

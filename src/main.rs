@@ -3,6 +3,10 @@ mod node;
 mod raft;
 mod transport;
 
+pub mod raft_proto {
+    tonic::include_proto!("raft");
+}
+
 #[derive(Parser, Debug)]
 #[clap(name = "rusty-raft", version, about = "Raft node in Rust")]
 struct Args {
